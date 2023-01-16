@@ -26,7 +26,6 @@ const SellerReviews = () => {
     });
   }, []);
 
-
   const columns = [
     {
       field: "createdAt",
@@ -186,42 +185,40 @@ const SellerReviews = () => {
           </Typography>
         )}
 
-        {!loading && reviews.length !== 0 && (
-          <Box
-            sx={{
-              height: 500,
-              width: "100%",
-              "& .super-app-theme--header": {
-                backgroundColor: "#2263a5",
-                breviewLeftWidth: 1,
-                breviewColor: "#f1f8ff",
-                color: "white",
+        <Box
+          sx={{
+            height: 500,
+            width: "100%",
+            "& .super-app-theme--header": {
+              backgroundColor: "#2263a5",
+              breviewLeftWidth: 1,
+              breviewColor: "#f1f8ff",
+              color: "white",
+            },
+          }}
+        >
+          <DataGrid
+            headerHeight={30}
+            loading={loading}
+            rows={reviews}
+            getRowId={(row) => row._id}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            disableSelectionOnClick
+            density="comfortable"
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "createdAt", sort: "desc" }],
               },
             }}
-          >
-            <DataGrid
-              headerHeight={30}
-              loading={loading}
-              rows={reviews}
-              getRowId={(row) => row._id}
-              columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              disableSelectionOnClick
-              density="comfortable"
-              initialState={{
-                sorting: {
-                  sortModel: [{ field: "createdAt", sort: "desc" }],
-                },
-              }}
-              components={{ Toolbar: QuickSearchToolbar }}
-            />
-            <Typography>
-              Awaiting review will be shown in product page once admin approves
-              it.
-            </Typography>
-          </Box>
-        )}
+            components={{ Toolbar: QuickSearchToolbar }}
+          />
+          <Typography>
+            Awaiting review will be shown in product page once admin approves
+            it.
+          </Typography>
+        </Box>
       </Container>
     </>
   );

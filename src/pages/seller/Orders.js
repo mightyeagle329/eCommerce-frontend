@@ -405,7 +405,7 @@ const SellerOrders = ({ from = false }) => {
             </Box>
           )}
 
-          {!loading && orders.length !== 0 && from === false && (
+          {from === false && (
             <>
               <Box
                 sx={{
