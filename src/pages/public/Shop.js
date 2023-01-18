@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../redux/apiCalls";
 import Products from "../../components/Products";
 
-const Shop = ({ cartOpen, open, providedShopName = false }) => {
+const Shop = ({ cartOpen=false, providedShopName = false }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
   const location = useLocation();
@@ -116,7 +116,6 @@ const Shop = ({ cartOpen, open, providedShopName = false }) => {
       >
         <Products
           cartOpen={cartOpen}
-          open={open}
           shopName={shopName}
           limit={providedShopName ? 3 : 100}
         />

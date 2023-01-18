@@ -14,6 +14,7 @@ import {
   Divider,
   Snackbar,
   Slide,
+  Alert,
 } from "@mui/material";
 
 import { Link } from "react-router-dom";
@@ -33,8 +34,7 @@ const ProductQuickView = ({ productId }) => {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
-  const [addedToCartMsg, setAddedToCartMsg] = useState(false);
-  const [addedToWishlistMsg, setAddedToWishlistMsg] = useState(false);
+  const [response, setResponse] = useState(false);
 
   const product = useSelector((state) =>
     state.product.products.find((product) => product._id === productId)
@@ -56,17 +56,20 @@ const ProductQuickView = ({ productId }) => {
   };
 
   const handleAddToCart = () => {
-    !user._id && navigate("/login");
-    user._id &&
-      addToCart(user._id, productInfo, dispatch).then(() => {
-        setAddedToCartMsg(true);
+    !user && navigate("/login");
+    user &&
+      user.accountType === 0 &&
+      addToCart(user._id, productInfo, dispatch).then((res) => {
+        setResponse(res);
       });
   };
+
   const handleAddToWishlist = () => {
-    !user._id && navigate("/login");
-    user._id &&
-      addToWishlist(user._id, productInfo).then(() => {
-        setAddedToWishlistMsg(true);
+    !user && navigate("/login");
+    user &&
+      user.accountType === 0 &&
+      addToWishlist(user._id, productInfo).then((res) => {
+        setResponse(res);
       });
   };
 
@@ -209,23 +212,26 @@ const ProductQuickView = ({ productId }) => {
         </Stack>
       </Container>
 
+      {/* Display success or error message */}
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        open={Boolean(addedToCartMsg)}
+        open={Boolean(response)}
         TransitionComponent={SlideTransition}
-        autoHideDuration={2000}
-        onClose={() => setAddedToCartMsg(false)}
-        message="Added To Cart"
-      />
-
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        open={addedToWishlistMsg}
-        TransitionComponent={SlideTransition}
-        autoHideDuration={2000}
-        onClose={() => setAddedToWishlistMsg(false)}
-        message="Added To Wishlist"
-      />
+        autoHideDuration={5000}
+        onClose={() => {
+          setResponse(false);
+        }}
+      >
+        <Alert
+          onClose={() => {
+            setResponse(false);
+          }}
+          severity={response.result}
+          sx={{ width: "100%" }}
+        >
+          {response.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

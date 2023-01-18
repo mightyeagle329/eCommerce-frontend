@@ -1,4 +1,3 @@
-import Cart from "./pages/user/Cart";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,40 +6,23 @@ import {
   getProductsAsSeller,
   getUser,
 } from "./redux/apiCalls";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ToBeSeller from "./components/ToBeSeller";
 import SellerDashboard from "./pages/seller/Dashboard";
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  Button,
-  Divider,
-  Drawer,
-  Fab,
-  Paper,
-  Stack,
-  Toolbar,
-  Typography,
-} from "@mui/material";
-import { Cancel, ShoppingBag } from "@mui/icons-material";
 import Dashboard from "./pages/public/Dashboard";
 
-const drawerWidth = 350;
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser) || 0;
-  const cart = useSelector((state) => state.cart);
-
-  const [cartOpen, setCartOpen] = useState(false);
 
   //When theres user get cart and user info and any time check for latest products
   useEffect(() => {
-    (!user || user.accountType !== 1) && getProducts(dispatch);
+    (!user || user.accountType === 0) && getProducts(dispatch);
     user &&
       user.accountType === 1 &&
       getProductsAsSeller(user.username, dispatch);
     user && getUser(user._id, dispatch);
-    user && user.accountType !== 1 && getCartProducts(user._id, dispatch);
+    user && user.accountType === 0 && getCartProducts(user._id, dispatch);
   }, [dispatch]);
 
   return (
@@ -56,7 +38,7 @@ const App = () => {
               ) : user.accountType === 2 ? (
                 <ToBeSeller />
               ) : (
-                <Dashboard cartOpen={cartOpen} />
+                <Dashboard />
               )
             }
           />

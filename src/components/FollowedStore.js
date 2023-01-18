@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Shop from "../pages/public/Shop";
 
-const FollowedStore = () => {
+const FollowedStore = ({ cartOpen = false }) => {
   const followedStores = useSelector(
     (state) => state.user.currentUser.followedStores
   );
@@ -34,7 +34,7 @@ const FollowedStore = () => {
           ))}
           <Divider variant="middle" />
           {followedStores.map((store) => (
-            <Shop providedShopName={store} key={store} />
+            <Shop cartOpen={cartOpen} providedShopName={store} key={store} />
           ))}
         </>
       )}

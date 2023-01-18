@@ -30,7 +30,6 @@ import { addToCart, addToWishlist } from "../redux/apiCalls";
 import { useDispatch } from "react-redux";
 import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
-import Product, { default as ProductPage } from "../pages/public/Product";
 import ProductQuickView from "./ProductQuickView";
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -104,6 +103,8 @@ const ProductComponent = ({ item }) => {
       });
   };
 
+  console.count(addedToCartMsg);
+
   return (
     <Grid item lg={3} sm={5} xs={10}>
       <Item
@@ -137,7 +138,7 @@ const ProductComponent = ({ item }) => {
             sx={{
               opacity: 0,
               width: 200,
-              height: 0,
+              height: 30,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -152,7 +153,7 @@ const ProductComponent = ({ item }) => {
             <IconButton
               color="primary"
               size="small"
-              onClick={handleAddToCart}
+              onClick={() => handleAddToCart()}
               sx={{ "&:hover": { bgcolor: "#CBF1F5", br: "50%" } }}
             >
               <Tooltip title="Add to Cart" placement="top" arrow>
@@ -162,7 +163,7 @@ const ProductComponent = ({ item }) => {
             <IconButton
               color="primary"
               size="small"
-              onClick={handleAddToWishlist}
+              onClick={() => handleAddToWishlist()}
               sx={{ "&:hover": { bgcolor: "#CBF1F5", br: "50%" } }}
             >
               <Tooltip title="Add to Wishlist" placement="top" arrow>
@@ -250,7 +251,7 @@ const ProductComponent = ({ item }) => {
 
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        open={Boolean(addedToCartMsg)}
+        open={addedToCartMsg}
         TransitionComponent={SlideTransition}
         autoHideDuration={2000}
         onClose={() => setAddedToCartMsg(false)}

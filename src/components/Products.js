@@ -5,16 +5,13 @@ import { useSelector } from "react-redux";
 import { getProductsAsCategory, getSellerProducts } from "../redux/apiCalls";
 
 const Products = ({
-  cartOpen = false,
-  open = false,
   cat = false,
-  limit,
   shopName = false,
-  sort,
+  sort = false,
+  cartOpen = false,
 }) => {
   const products = useSelector((state) => state.product.products);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [num, setNum] = useState(15);
   useEffect(() => {
     cat && getProductsAsCategory(cat).then((res) => setFilteredProducts(res));
   }, [cat]);
@@ -38,16 +35,6 @@ const Products = ({
       );
   }, [sort]);
 
-  useEffect(() => {
-    cartOpen && open
-      ? setNum(10)
-      : open && !cartOpen
-      ? setNum(15)
-      : cartOpen && !open
-      ? setNum(15)
-      : setNum(15);
-  }, [cartOpen, open]);
-
   return (
     <>
       {cat && filteredProducts.length === 0 ? (
@@ -59,16 +46,14 @@ const Products = ({
           container
           rowSpacing={2}
           columnSpacing={1}
-          columns={{ xs: 5, sm: 10, md: num }}
+          columns={{ xs: 5, sm: 10, md: cartOpen ? 10 : 15 }}
         >
           {/* columns 5 = 1 product */}
           {cat || shopName
-            ? filteredProducts
-                .slice(0, limit)
-                .map((item) => <Product item={item} key={item._id} />)
-            : products
-                .slice(0, limit)
-                .map((item) => <Product item={item} key={item._id} />)}
+            ? filteredProducts.map((item) => (
+                <Product item={item} key={item._id} />
+              ))
+            : products.map((item) => <Product item={item} key={item._id} />)}
         </Grid>
       )}
     </>

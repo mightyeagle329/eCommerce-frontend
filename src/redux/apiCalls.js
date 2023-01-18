@@ -28,10 +28,10 @@ import {
 import axios from "axios";
 
 axios.defaults.withCredentials = true; //so its can set automatically the cookie i want
-axios.defaults.baseURL = "https://bestmart-api.vercel.app/api";
-// process.env.NODE_ENV === "development"
-//   ? "http://localhost:4000/api"
-//   : "https://bestmart.vercel.app/api";
+axios.defaults.baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000/api"
+    : "https://bestmart-api.vercel.app/api";
 //User
 export const logout = async () => {
   await axios.get("/auth/logout");
@@ -292,8 +292,10 @@ export const addToCart = async (id, product, dispatch) => {
   try {
     const res = await axios.post(`/carts/${id}`, product);
     dispatch(addToCartSuccess(res.data));
+    return { result: "success", message: "Added to cart" };
   } catch (err) {
     dispatch(addToCartFailure());
+    return { result: "error", message: "Failed to add to cart:" + err };
   }
 };
 
@@ -319,10 +321,10 @@ export const getWishlistProducts = async (id) => {
 
 export const addToWishlist = async (id, product) => {
   try {
-    const res = await axios.post(`/wishlist/${id}`, product);
-    return res;
+    await axios.post(`/wishlist/${id}`, product);
+    return { result: "success", message: "Added to wishlist" };
   } catch (err) {
-    return err;
+    return { result: "error", message: "Failed to add to wishlist: " + err };
   }
 };
 
@@ -364,11 +366,8 @@ export const getOrders = async (id) => {
 };
 
 export const getOrderDetails = async (orderId) => {
-  console.log(1);
   try {
-    console.log(2);
     const res = await axios.get(`/orders/findOrder/${orderId}`);
-    console.log(res);
     return res.data;
   } catch (err) {
     console.log(err);

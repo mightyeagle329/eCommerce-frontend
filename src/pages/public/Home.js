@@ -1,16 +1,12 @@
 import Products from "../../components/Products";
-import {
-  Box,
-  Tab,
-  Tabs,
-} from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import Offers from "../../components/Offers";
 import FlashSale from "../../components/FlashSale";
 import { useState } from "react";
 import FollowedStore from "../../components/FollowedStore";
 import { useSelector } from "react-redux";
 
-const Home = ({ cartOpen, open }) => {
+const Home = ({ cartOpen }) => {
   const user = useSelector((state) => state.user.currentUser);
   const [value, setValue] = useState(1);
 
@@ -60,10 +56,10 @@ const Home = ({ cartOpen, open }) => {
         </Box>
       </Box>
       <TabPanel value={value} index={1}>
-        <Products cartOpen={cartOpen} open={open} />
+        <Products cartOpen={cartOpen} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <FollowedStore />
+        <FollowedStore cartOpen={cartOpen} />
       </TabPanel>
     </>
   );

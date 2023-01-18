@@ -169,7 +169,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export default function Dashboard() {
   const theme = useTheme();
-  const isBigScreen = useMediaQuery(theme.breakpoints.up("sm"));
+  const isBigScreen = useMediaQuery(theme.breakpoints.up("md"));
   const cart = useSelector((state) => state.cart);
 
   const [cartOpen, setCartOpen] = useState(false);
@@ -184,6 +184,7 @@ export default function Dashboard() {
 
   const handleMenuClick = () => {
     setOpen(!open);
+    setCartOpen(false);
   };
 
   const user = useSelector((state) => state.user.currentUser) || "";
@@ -321,32 +322,31 @@ export default function Dashboard() {
             "& .MuiDrawer-paper": {
               width: drawerWidth,
               boxSizing: "border-box",
-              display: { xs: "none", sm: !open ? "none" : "block" },
+              display: { xs: "none", md: !open ? "none" : "block" },
             },
           }}
           variant="permanent"
           anchor="left"
-          open={open}
+          open={open && isBigScreen}
         >
           <Toolbar />
           <Navbar />
         </Drawer>
-        <SwipeableDrawer
-          sx={{
-            display: { xs: "block", sm: "none" },
-          }}
+        <Drawer
           anchor="left"
-          variant="temporary"
-          open={open}
-          onClose={() => handleMenuClick}
+          open={open && !isBigScreen}
+          onClose={() => setOpen(false)}
         >
           <Toolbar />
           <Navbar />
-        </SwipeableDrawer>
+        </Drawer>
         <Main open={open}>
           <DrawerHeader />
           {query !== "" ? (
-            <ProductSearch query={query.toLowerCase().split(" ").join("-")} />
+            <ProductSearch
+              query={query.toLowerCase().split(" ").join("-")}
+              cartOpen={cartOpen}
+            />
           ) : shopName ? (
             <Shop cartOpen={cartOpen} />
           ) : categoryName ? (
@@ -373,7 +373,7 @@ export default function Dashboard() {
             <NotFoundPage />
           )}
 
-          <Footer cartOpen={cartOpen} />
+          <Footer />
         </Main>
       </Box>
 
@@ -459,7 +459,7 @@ export default function Dashboard() {
       </Menu>
 
       {/* Pc or tab users cart */}
-      {!cartOpen && user.accountType !== 1 && (
+      {!cartOpen && (user.accountType === 0 || !user) && (
         <Fab
           color="primary"
           aria-label="cart"
@@ -480,7 +480,10 @@ export default function Dashboard() {
               transition: "height 0.5s ease",
             },
           }}
-          onClick={() => setCartOpen(true)}
+          onClick={() => {
+            setCartOpen(true);
+            setOpen(false);
+          }}
         >
           <Stack alignItems="center" justifyContent="center">
             <ShoppingBag fontSize="large" />
@@ -509,7 +512,10 @@ export default function Dashboard() {
             <BottomNavigationAction
               label={`${cart.products.length} Items`}
               icon={<ShoppingBag color="primary" />}
-              onClick={() => setCartOpen(true)}
+              onClick={() => {
+                setCartOpen(true);
+                setOpen(false);
+              }}
             />
           </BottomNavigation>
         </Paper>
@@ -550,7 +556,9 @@ export default function Dashboard() {
             <Button
               color="error"
               variant="outlined"
-              onClick={() => setCartOpen(!cartOpen)}
+              onClick={() => {
+                setCartOpen(false);
+              }}
             >
               <Cancel />
             </Button>

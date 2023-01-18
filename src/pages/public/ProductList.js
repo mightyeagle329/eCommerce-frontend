@@ -24,7 +24,7 @@ const Select = styled("select")(({ theme }) => ({
 }));
 const Option = styled("option")(({ theme }) => ({}));
 
-const ProductList = ({ cartOpen, open }) => {
+const ProductList = ({ cartOpen = false }) => {
   const location = useLocation();
   const cat = location.pathname.split("/")[2];
   const [sort, setSort] = useState("newest");
@@ -41,13 +41,7 @@ const ProductList = ({ cartOpen, open }) => {
           </Select>
         </Filter>
       </Stack>
-      <Products
-        cat={cat}
-        sort={sort}
-        limit={30}
-        cartOpen={cartOpen}
-        open={open}
-      />
+      <Products cat={cat} sort={sort} limit={30} cartOpen={cartOpen} />
     </Container>
   );
 };
