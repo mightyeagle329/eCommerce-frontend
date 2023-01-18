@@ -92,18 +92,20 @@ const ProductComponent = ({ item }) => {
     user &&
       addToCart(user._id, productInfo, dispatch).then(() => {
         setAddedToCartMsg(true);
+        console.log(addedToCartMsg);
       });
   };
 
+  console.log("Hi fro, productComponent");
+  console.log(addedToCartMsg);
   const handleAddToWishlist = () => {
     !user && navigate("/login");
     user &&
       addToWishlist(user._id, productInfo).then(() => {
         setAddedToWishlistMsg(true);
+        console.log(addedToWishlistMsg);
       });
   };
-
-  console.count(addedToCartMsg);
 
   return (
     <Grid item lg={3} sm={5} xs={10}>
@@ -153,7 +155,7 @@ const ProductComponent = ({ item }) => {
             <IconButton
               color="primary"
               size="small"
-              onClick={() => handleAddToCart()}
+              onClick={handleAddToCart}
               sx={{ "&:hover": { bgcolor: "#CBF1F5", br: "50%" } }}
             >
               <Tooltip title="Add to Cart" placement="top" arrow>
@@ -163,7 +165,7 @@ const ProductComponent = ({ item }) => {
             <IconButton
               color="primary"
               size="small"
-              onClick={() => handleAddToWishlist()}
+              onClick={handleAddToWishlist}
               sx={{ "&:hover": { bgcolor: "#CBF1F5", br: "50%" } }}
             >
               <Tooltip title="Add to Wishlist" placement="top" arrow>

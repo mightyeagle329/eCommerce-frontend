@@ -46,7 +46,7 @@ const Products = ({
           container
           rowSpacing={2}
           columnSpacing={1}
-          columns={{ xs: 5, sm: 10, md: cartOpen ? 10 : 15 }}
+          columns={{ xs: 5, sm: cartOpen ? 5 : 10, md: cartOpen ? 10 : 15 }}
         >
           {/* columns 5 = 1 product */}
           {cat || shopName
