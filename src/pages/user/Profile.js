@@ -24,7 +24,7 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Fade direction="left" ref={ref} {...props} />;
 });
 
-const Profile = () => {
+const Profile = ({ cartOpen }) => {
   const [editProfileOpen, setEditProfileOpen] = useState(false);
   const [addressBookOpen, setAddressBookOpen] = useState(false);
 
@@ -35,7 +35,11 @@ const Profile = () => {
       <Stack
         direction="row"
         justifyContent="space-evenly"
-        sx={{ bgcolor: "white", mt: 2 }}
+        sx={{
+          bgcolor: "white",
+          mt: 2,
+          flexDirection: { md: "column", lg: cartOpen ? "column" : "row" },
+        }}
       >
         <Avatar
           src={user.img}
@@ -50,7 +54,7 @@ const Profile = () => {
             </Link>
           </Typography>
           <Stack direction="row" justifyContent="center">
-            <ViewProfile />
+            <ViewProfile cartOpen={cartOpen} />
           </Stack>
         </Stack>
         <Stack>

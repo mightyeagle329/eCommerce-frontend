@@ -9,6 +9,7 @@ const Products = ({
   shopName = false,
   sort = false,
   cartOpen = false,
+  limit = 100,
 }) => {
   const products = useSelector((state) => state.product.products);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -50,10 +51,12 @@ const Products = ({
         >
           {/* columns 5 = 1 product */}
           {cat || shopName
-            ? filteredProducts.map((item) => (
-                <Product item={item} key={item._id} />
-              ))
-            : products.map((item) => <Product item={item} key={item._id} />)}
+            ? filteredProducts
+                .slice(0, limit)
+                .map((item) => <Product item={item} key={item._id} />)
+            : products
+                .slice(0, limit)
+                .map((item) => <Product item={item} key={item._id} />)}
         </Grid>
       )}
     </>

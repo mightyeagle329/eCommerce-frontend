@@ -360,7 +360,7 @@ export default function Dashboard() {
           ) : nowShowing === "Wishlist" ? (
             <Wishlist />
           ) : nowShowing === "Profile" ? (
-            <Profile />
+            <Profile cartOpen={cartOpen} />
           ) : nowShowing === "Orders" ? (
             <Orders />
           ) : nowShowing === "Login" ? (

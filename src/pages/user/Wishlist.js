@@ -67,11 +67,14 @@ const Wishlist = () => {
 
   const handleAddToCart = (item) => {
     const productInfo = {
-      productId: item.productId,
+      productId: item._id,
       title: item.title,
       img: item.img,
       quantity: 1,
       price: item.price,
+      marketPrice: item.marketPrice,
+      seller: item.seller,
+      hasMerchantReturnPolicy: item.hasMerchantReturnPolicy,
     };
     !id && Navigate("/login");
     id &&
@@ -87,6 +90,12 @@ const Wishlist = () => {
   }, [id]);
 
   const columns = [
+    { field: "productId", hide: true },
+    { field: "img", hide: true },
+    { field: "marketPrice", hide: true },
+    { field: "seller", hide: true },
+    { field: "hasMerchantReturnPolicy", hide: true },
+
     {
       field: "title",
       headerName: "Product",
@@ -107,7 +116,7 @@ const Wishlist = () => {
       headerName: "Price",
       headerClassName: "super-app-theme--header",
       width: 150,
-      editable: true,
+      editable: false,
     },
     {
       field: "action",

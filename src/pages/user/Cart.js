@@ -35,6 +35,7 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [groupedCart, setGroupedCart] = useState({});
   const [totalSaved, setTotalSaved] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let totalMarketPrice = 0;
@@ -81,18 +82,6 @@ const Cart = () => {
     setTotalSaved(totalMarketPrice);
   }, [cart]);
 
-  //Empty Cart Prompt
-  const [openEmptyCartDialog, setOpenEmptyCartDialog] = useState(false);
-
-  const handleEmptyCart = () => {
-    deleteCart(id, dispatch);
-    setOpenEmptyCartDialog(false);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenEmptyCartDialog(false);
-  };
-
   const handleQuantity = (
     type,
     productId,
@@ -104,6 +93,7 @@ const Cart = () => {
     seller,
     hasMerchantReturnPolicy
   ) => {
+    setLoading(true);
     let productInfo = {
       productId: productId,
       title: title,
@@ -113,40 +103,23 @@ const Cart = () => {
       seller: seller,
       hasMerchantReturnPolicy: hasMerchantReturnPolicy,
     };
-    if (type === "dec") {
+    if (type === "dec" && productInfo.quantity) {
       productInfo.quantity = -1;
       addToCart(id, productInfo, dispatch);
+      setLoading(false);
     } else if (type === "inc") {
       productInfo.quantity = 1;
       addToCart(id, productInfo, dispatch);
+      setLoading(false);
     } else {
       productInfo.quantity = -quantity;
       addToCart(id, productInfo, dispatch);
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <Dialog
-        open={Boolean(openEmptyCartDialog)}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleCloseDialog}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{"Delete all products from cart?"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            If you proceed now your cart will be erased. This action is non
-            reversible.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog}>Cancel</Button>
-          <Button onClick={handleEmptyCart}>Proceed</Button>
-        </DialogActions>
-      </Dialog>
-
       <Stack direction="column" gap={1}>
         {!id && (
           <Typography sx={{ textAlign: "center", marginTop: 5 }}>
@@ -226,6 +199,7 @@ const Cart = () => {
                             sx={{ flexDirection: { xs: "row", sm: "column" } }}
                           >
                             <Button
+                              disabled={loading}
                               variant="text"
                               onClick={() =>
                                 handleQuantity(
@@ -248,6 +222,7 @@ const Cart = () => {
                             <Typography color="primary">{quantity}</Typography>
                             <Button
                               variant="text"
+                              disabled={loading}
                               onClick={() =>
                                 handleQuantity(
                                   "dec",
@@ -300,6 +275,7 @@ const Cart = () => {
                             </Typography>
                           </Stack>
                           <IconButton
+                            disabled={loading}
                             size="large"
                             onClick={() =>
                               handleQuantity(

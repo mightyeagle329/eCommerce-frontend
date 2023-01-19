@@ -30,6 +30,7 @@ import { addToCart, addToWishlist } from "../redux/apiCalls";
 import { useDispatch } from "react-redux";
 import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
+import Product, { default as ProductPage } from "../pages/public/Product";
 import ProductQuickView from "./ProductQuickView";
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -88,25 +89,19 @@ const ProductComponent = ({ item }) => {
   };
 
   const handleAddToCart = () => {
-    !user && navigate("/login");
-    user &&
+    !user._id && navigate("/login");
+    user._id &&
       addToCart(user._id, productInfo, dispatch).then(() => {
         setAddedToCartMsg(true);
-        console.log(addedToCartMsg);
       });
   };
-
-  console.log("Hi fro, productComponent");
-  console.log(addedToCartMsg);
   const handleAddToWishlist = () => {
-    !user && navigate("/login");
-    user &&
+    !user._id && navigate("/login");
+    user._id &&
       addToWishlist(user._id, productInfo).then(() => {
         setAddedToWishlistMsg(true);
-        console.log(addedToWishlistMsg);
       });
   };
-
   return (
     <Grid item lg={3} sm={5} xs={10}>
       <Item
@@ -140,7 +135,7 @@ const ProductComponent = ({ item }) => {
             sx={{
               opacity: 0,
               width: 200,
-              height: 30,
+              height: 0,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -172,21 +167,17 @@ const ProductComponent = ({ item }) => {
                 <FavoriteBorderOutlined fontSize="inherit" />
               </Tooltip>
             </IconButton>
-
-            <Link
-              to={`/product/${item._id}`}
-              style={{ textDecoration: "none" }}
+            <IconButton
+              color="primary"
+              size="small"
+              sx={{ "&:hover": { bgcolor: "#CBF1F5", br: "50%" } }}
             >
-              <IconButton
-                color="primary"
-                size="small"
-                sx={{ "&:hover": { bgcolor: "#CBF1F5", br: "50%" } }}
-              >
+              <Link to={`/product/${item._id}`} sx={{ textDecoration: "none" }}>
                 <Tooltip title="View Details" placement="top" arrow>
                   <InfoOutlined fontSize="inherit" />
                 </Tooltip>
-              </IconButton>
-            </Link>
+              </Link>
+            </IconButton>
           </Stack>
         </Stack>
 
@@ -253,7 +244,7 @@ const ProductComponent = ({ item }) => {
 
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        open={addedToCartMsg}
+        open={Boolean(addedToCartMsg)}
         TransitionComponent={SlideTransition}
         autoHideDuration={2000}
         onClose={() => setAddedToCartMsg(false)}

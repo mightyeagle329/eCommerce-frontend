@@ -24,7 +24,7 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
-const ViewProfile = () => {
+const ViewProfile = ({ cartOpen }) => {
   const user = useSelector((state) => state.user.currentUser);
 
   return (
@@ -32,7 +32,9 @@ const ViewProfile = () => {
       <Stack
         justifyContent="center"
         gap={2}
-        sx={{ flexDirection: { md: "column", lg: "row" } }}
+        sx={{
+          flexDirection: { md: "column", lg: cartOpen ? "column" : "row" },
+        }}
       >
         <Stack flex={2}>
           <Typography variant="body2">Contact Information</Typography>

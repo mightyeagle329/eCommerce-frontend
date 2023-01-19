@@ -287,18 +287,6 @@ export const getCartProducts = async (id, dispatch) => {
   }
 };
 
-export const addToCart = async (id, product, dispatch) => {
-  dispatch(addToCartStart());
-  try {
-    const res = await axios.post(`/carts/${id}`, product);
-    dispatch(addToCartSuccess(res.data));
-    return { result: "success", message: "Added to cart" };
-  } catch (err) {
-    dispatch(addToCartFailure());
-    return { result: "error", message: "Failed to add to cart:" + err };
-  }
-};
-
 export const deleteCart = async (id, dispatch) => {
   dispatch(deleteCartStart());
   try {
@@ -309,22 +297,31 @@ export const deleteCart = async (id, dispatch) => {
   }
 };
 
+export const addToCart = async (id, product, dispatch) => {
+  dispatch(addToCartStart());
+  try {
+    const res = await axios.post(`/carts/${id}`, product);
+    dispatch(addToCartSuccess(res.data));
+  } catch (err) {
+    dispatch(addToCartFailure());
+  }
+};
 //Wishlist
+export const addToWishlist = async (id, product) => {
+  try {
+    const res = await axios.post(`/wishlist/${id}`, product);
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const getWishlistProducts = async (id) => {
   try {
     const res = await axios.get(`/wishlist/find/${id}`);
     return res.data;
   } catch (err) {
     return err;
-  }
-};
-
-export const addToWishlist = async (id, product) => {
-  try {
-    await axios.post(`/wishlist/${id}`, product);
-    return { result: "success", message: "Added to wishlist" };
-  } catch (err) {
-    return { result: "error", message: "Failed to add to wishlist: " + err };
   }
 };
 
