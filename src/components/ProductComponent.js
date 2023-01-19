@@ -89,15 +89,13 @@ const ProductComponent = ({ item }) => {
   };
 
   const handleAddToCart = () => {
-    !user._id && navigate("/login");
-    user._id &&
-      addToCart(user._id, productInfo, dispatch).then(() => {
-        setAddedToCartMsg(true);
-      });
+    !user && navigate("/login");
+    user && addToCart(user._id, productInfo, dispatch);
   };
+
   const handleAddToWishlist = () => {
-    !user._id && navigate("/login");
-    user._id &&
+    !user && navigate("/login");
+    user &&
       addToWishlist(user._id, productInfo).then(() => {
         setAddedToWishlistMsg(true);
       });
@@ -244,7 +242,7 @@ const ProductComponent = ({ item }) => {
 
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        open={Boolean(addedToCartMsg)}
+        open={addedToCartMsg}
         TransitionComponent={SlideTransition}
         autoHideDuration={2000}
         onClose={() => setAddedToCartMsg(false)}

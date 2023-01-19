@@ -118,27 +118,31 @@ const ProductQuickView = ({ productId }) => {
               alignItems="center"
               sx={{ marginTop: 5, marginBottom: 2, gap: 5 }}
             >
-              <TextField
-                type="number"
-                error={
-                  quantity < 1 ||
-                  quantity > product.inStock ||
-                  quantity % 1 !== 0
-                }
-                id="quantity"
-                label="Quantity"
-                value={quantity}
-                size="small"
-                variant="outlined"
-                helperText={
-                  (quantity < 1 ||
+              {product.inStock ? (
+                <TextField
+                  type="number"
+                  error={
+                    quantity < 1 ||
                     quantity > product.inStock ||
-                    quantity % 1 !== 0) &&
-                  "Quantity must be greater than 0 & below stock"
-                }
-                onChange={(e) => setQuantity(e.target.valueAsNumber)}
-                sx={{ width: 100 }}
-              />
+                    quantity % 1 !== 0
+                  }
+                  id="quantity"
+                  label="Quantity"
+                  value={quantity}
+                  size="small"
+                  variant="outlined"
+                  helperText={
+                    (quantity < 1 ||
+                      quantity > product.inStock ||
+                      quantity % 1 !== 0) &&
+                    "Quantity must be greater than 0 & below stock"
+                  }
+                  onChange={(e) => setQuantity(e.target.valueAsNumber)}
+                  sx={{ width: 100 }}
+                />
+              ) : (
+                ""
+              )}
               <Stack gap={1}>
                 <Button
                   variant="contained"

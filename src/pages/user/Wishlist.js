@@ -100,7 +100,7 @@ const Wishlist = () => {
       field: "title",
       headerName: "Product",
       headerClassName: "super-app-theme--header",
-      width: 300,
+      width: 330,
       editable: false,
       renderCell: (params) => {
         return (
@@ -122,7 +122,7 @@ const Wishlist = () => {
       field: "action",
       headerName: "Action",
       headerClassName: "super-app-theme--header",
-      width: 330,
+      width: 300,
       renderCell: (params) => {
         return (
           <Stack direction="row" sx={{ gap: 1 }}>
@@ -130,15 +130,16 @@ const Wishlist = () => {
               to={`/product/${params.row.productId}`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              <Button variant="outlined">
-                <Typography>View Details</Typography>
+              <Button variant="outlined" size="small">
+                View Details
               </Button>
             </Link>
             <Button
+              size="small"
               variant="outlined"
               onClick={() => handleAddToCart(params.row)}
             >
-              <Typography>Add to Cart</Typography>
+              Add to Cart
             </Button>
           </Stack>
         );

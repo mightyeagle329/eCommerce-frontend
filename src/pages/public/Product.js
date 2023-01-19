@@ -61,15 +61,15 @@ const Product = () => {
   };
 
   const handleAddToCart = () => {
-    !user._id && navigate("/login");
-    user._id &&
+    !user && navigate("/login");
+    user &&
       addToCart(user._id, productInfo, dispatch).then(() => {
         setAddedToCartMsg(true);
       });
   };
   const handleAddToWishlist = () => {
-    !user._id && navigate("/login");
-    user._id &&
+    !user && navigate("/login");
+    user &&
       addToWishlist(user._id, productInfo).then(() => {
         setAddedToWishlistMsg(true);
       });

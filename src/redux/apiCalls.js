@@ -302,17 +302,19 @@ export const addToCart = async (id, product, dispatch) => {
   try {
     const res = await axios.post(`/carts/${id}`, product);
     dispatch(addToCartSuccess(res.data));
+    return { result: "success", message: "Added to cart" };
   } catch (err) {
     dispatch(addToCartFailure());
+    return { result: "error", message: "Failed to add to cart" + err };
   }
 };
 //Wishlist
 export const addToWishlist = async (id, product) => {
   try {
-    const res = await axios.post(`/wishlist/${id}`, product);
-    return res;
+    await axios.post(`/wishlist/${id}`, product);
+    return { result: "success", message: "Added to wishlist" };
   } catch (err) {
-    return err;
+    return { result: "error", message: "Failed to add to wishlist" + err };
   }
 };
 

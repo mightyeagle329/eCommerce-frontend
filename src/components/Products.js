@@ -1,8 +1,27 @@
 import { useEffect, useState } from "react";
-import { Box, Grid, Stack, styled, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Grid,
+  Slide,
+  Snackbar,
+  Stack,
+  styled,
+  Typography,
+} from "@mui/material";
 import Product from "./ProductComponent";
-import { useSelector } from "react-redux";
-import { getProductsAsCategory, getSellerProducts } from "../redux/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  addToWishlist,
+  getProductsAsCategory,
+  getSellerProducts,
+} from "../redux/apiCalls";
+import { useNavigate } from "react-router-dom";
+
+function SlideTransition(props) {
+  return <Slide {...props} direction="left" />;
+}
 
 const Products = ({
   cat = false,
@@ -13,6 +32,11 @@ const Products = ({
 }) => {
   const products = useSelector((state) => state.product.products);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [response, setResponse] = useState(false);
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     cat && getProductsAsCategory(cat).then((res) => setFilteredProducts(res));
   }, [cat]);
@@ -36,6 +60,20 @@ const Products = ({
       );
   }, [sort]);
 
+  const handleAddToCart = (productInfo) => {
+    !user && navigate("/login");
+    user &&
+      addToCart(user._id, productInfo, dispatch).then((res) =>
+        setResponse(res)
+      );
+  };
+
+  const handleAddToWishlist = (productInfo) => {
+    !user && navigate("/login");
+    user &&
+      addToWishlist(user._id, productInfo).then((res) => setResponse(res));
+  };
+
   return (
     <>
       {cat && filteredProducts.length === 0 ? (
@@ -53,12 +91,47 @@ const Products = ({
           {cat || shopName
             ? filteredProducts
                 .slice(0, limit)
-                .map((item) => <Product item={item} key={item._id} />)
+                .map((item) => (
+                  <Product
+                    item={item}
+                    key={item._id}
+                    handleAddToCart={handleAddToCart}
+                    handleAddToWishlist={handleAddToWishlist}
+                  />
+                ))
             : products
                 .slice(0, limit)
-                .map((item) => <Product item={item} key={item._id} />)}
+                .map((item) => (
+                  <Product
+                    item={item}
+                    key={item._id}
+                    handleAddToCart={handleAddToCart}
+                    handleAddToWishlist={handleAddToWishlist}
+                  />
+                ))}
         </Grid>
       )}
+
+      {/* Display success or error message */}
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={Boolean(response)}
+        TransitionComponent={SlideTransition}
+        autoHideDuration={5000}
+        onClose={() => {
+          setResponse(false);
+        }}
+      >
+        <Alert
+          onClose={() => {
+            setResponse(false);
+          }}
+          severity={response.result}
+          sx={{ width: "100%" }}
+        >
+          {response.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

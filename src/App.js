@@ -23,7 +23,7 @@ const App = () => {
       getProductsAsSeller(user.username, dispatch);
     user && getUser(user._id, dispatch);
     user && user.accountType === 0 && getCartProducts(user._id, dispatch);
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
