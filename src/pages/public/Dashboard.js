@@ -29,7 +29,6 @@ import {
   MenuItem,
   Paper,
   Stack,
-  SwipeableDrawer,
   useMediaQuery,
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
