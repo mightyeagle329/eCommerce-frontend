@@ -105,21 +105,6 @@ Approve or remove products.
 #### Questions
 ![Seller Questions](https://i.ibb.co/bHxJt6f/image-2023-01-24-181757245.png)
 
-### Admin Panel
-#### Dashboard
-![Admin Panel Homepage](https://i.ibb.co/3kFsgWR/image-2023-01-24-180442190.png)
-#### Products
-![Admin Panel Products](https://i.ibb.co/34yBKLz/image-2023-01-24-180634969.png)
-#### Users
-![Admin Panel Users Page](https://i.ibb.co/gzn8Pb6/image-2023-01-24-180903390.png)
-#### Orders
-![Admin Panel Orders Page](https://i.ibb.co/6mFNkG7/image-2023-01-24-180953213.png)
-#### Categories
-![Admin Panel Categories Page](https://i.ibb.co/Lggx77f/image-2023-01-24-181037286.png)
-#### Reviews
-![Admin Panel Reviews Page](https://i.ibb.co/ZcGBBpG/image-2023-01-24-181133235.png)
-
-
 
 ## Demo
 
@@ -128,6 +113,4 @@ Approve or remove products.
 use username: checking and password: 1234 for demo customer
 
 use username: Tech Shop and password: 1234 for demo seller
-
-[Admin Panel Demo](https://bestmart-admin.vercel.app)
 
