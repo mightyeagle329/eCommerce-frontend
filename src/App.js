@@ -54,7 +54,6 @@ const App = () => {
           <Route
             path="/shop/:shopName"
             element={user.accountType !== 2 && <Dashboard />}
-            z
           />
           <Route path="/products/:categoryName" element={<Dashboard />} />
           <Route path="/product/:productId" element={<Dashboard />} />
