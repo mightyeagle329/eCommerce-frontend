@@ -53,7 +53,7 @@ export const login = async (dispatch, user) => {
   try {
     const res = await axios.post("/auth/login", user);
     dispatch(loginSuccess(res.data));
-    return res;
+    return { result: "success" };
   } catch (err) {
     dispatch(loginFailure(err.response.data));
     return err;

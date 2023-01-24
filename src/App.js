@@ -17,13 +17,17 @@ const App = () => {
 
   //When theres user get cart and user info and any time check for latest products
   useEffect(() => {
-    (!user || user.accountType === 0) && getProducts(dispatch);
-    user &&
+    !user && getProducts(dispatch);
+    if (user) {
       user.accountType === 1 &&
-      getProductsAsSeller(user.username, dispatch);
-    user && getUser(user._id, dispatch);
-    user && user.accountType === 0 && getCartProducts(user._id, dispatch);
-  }, []);
+        getProductsAsSeller(user.username, dispatch) &&
+        getUser(user._id, dispatch);
+      user.accountType === 0 &&
+        getUser(user._id, dispatch) &&
+        getCartProducts(user._id, dispatch) &&
+        getProducts(dispatch);
+    }
+  }, [user.accountType]);
 
   return (
     <>

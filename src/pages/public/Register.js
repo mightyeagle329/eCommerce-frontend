@@ -201,13 +201,19 @@ export default function Register() {
         <Grid container justifyContent="space-between">
           <Grid item>
             Own Business?
-            <Link to="/sell-online" sx={{ ml: 1, textDecoration: "none" }}>
+            <Link
+              to="/sell-online"
+              style={{ marginLeft: "1px", textDecoration: "none" }}
+            >
               Register as Seller Instead
             </Link>
           </Grid>
           <Grid item>
             Already have an account?{" "}
-            <Link to="/login" sx={{ ml: 1, textDecoration: "none" }}>
+            <Link
+              to="/login"
+              style={{ marginLeft: "1px", textDecoration: "none" }}
+            >
               Sign in
             </Link>
           </Grid>

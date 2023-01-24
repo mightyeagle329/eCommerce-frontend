@@ -89,6 +89,7 @@ const Wishlist = () => {
     );
   }, [id]);
 
+
   const columns = [
     { field: "productId", hide: true },
     { field: "img", hide: true },

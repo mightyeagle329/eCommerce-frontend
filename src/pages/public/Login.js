@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/apiCalls";
+import { getCartProducts, login } from "../../redux/apiCalls";
 import { useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useLocation } from "react-router-dom";
@@ -126,13 +126,20 @@ export default function Login() {
         <Grid container>
           <Grid item xs>
             Forgot password?
-            <Link to="" variant="body2" sx={{ ml: 1 }}>
+            <Link
+              to=""
+              variant="body2"
+              style={{ marginLeft: "1px", textDecoration: "none" }}
+            >
               Reset Password
             </Link>
           </Grid>
           <Grid item>
             Don't have an account?{" "}
-            <Link to="/register" sx={{ ml: 1, textDecoration: "none" }}>
+            <Link
+              to="/register"
+              style={{ marginLeft: "1px", textDecoration: "none" }}
+            >
               Sign Up
             </Link>
           </Grid>
