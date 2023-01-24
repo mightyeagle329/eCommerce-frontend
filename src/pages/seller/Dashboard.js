@@ -353,22 +353,6 @@ export default function SellerDashboard() {
         </DialogContent>
       </Dialog>
 
-      <Dialog
-        TransitionComponent={Transition}
-        open={addressBookOpen}
-        scroll="paper"
-        aria-labelledby="title"
-      >
-        <DialogActions>
-          <Button onClick={() => setAddressBookOpen(false)}>Cancel</Button>
-        </DialogActions>
-        <DialogTitle id="title" variant="h6" sx={{ pb: 1 }}>
-          Address Book
-        </DialogTitle>
-        <DialogContent>
-          <AddressBook />
-        </DialogContent>
-      </Dialog>
     </>
   );
 }
