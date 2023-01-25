@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { GridToolbarQuickFilter } from "@mui/x-data-grid";
+import { GridToolbar } from "@mui/x-data-grid";
 
 export default function QuickSearchToolbar() {
   return (
@@ -9,7 +9,7 @@ export default function QuickSearchToolbar() {
         pb: 0,
       }}
     >
-      <GridToolbarQuickFilter
+      <GridToolbar
         quickFilterParser={(searchInput) =>
           searchInput.split(",").map((value) => value.trim())
         }
