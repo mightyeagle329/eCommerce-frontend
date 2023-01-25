@@ -103,7 +103,7 @@ const Cart = () => {
       seller: seller,
       hasMerchantReturnPolicy: hasMerchantReturnPolicy,
     };
-    if (type === "dec" && productInfo.quantity) {
+    if (type === "dec") {
       productInfo.quantity = -1;
       addToCart(id, productInfo, dispatch);
       setLoading(false);
@@ -111,7 +111,7 @@ const Cart = () => {
       productInfo.quantity = 1;
       addToCart(id, productInfo, dispatch);
       setLoading(false);
-    } else {
+    } else if (type === "remove") {
       productInfo.quantity = -quantity;
       addToCart(id, productInfo, dispatch);
       setLoading(false);
@@ -222,7 +222,7 @@ const Cart = () => {
                             <Typography color="primary">{quantity}</Typography>
                             <Button
                               variant="text"
-                              disabled={loading}
+                              disabled={loading || quantity === 1}
                               onClick={() =>
                                 handleQuantity(
                                   "dec",
