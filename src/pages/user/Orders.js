@@ -40,7 +40,7 @@ const Orders = () => {
       field: "createdAt",
       headerName: "Placed On",
       headerClassName: "super-app-theme--header",
-      width: 245,
+      width: 275,
       editable: false,
       renderCell: (params) => {
         return (
@@ -63,7 +63,7 @@ const Orders = () => {
       field: "action",
       headerName: "Action",
       headerClassName: "super-app-theme--header",
-      width: 130,
+      width: 250,
       renderCell: (params) => {
         return (
           <Stack sx={{ alignItems: "center" }}>
