@@ -285,7 +285,12 @@ const SellerOrders = ({ from = false }) => {
           <Stack direction="row" alignItems="center" sx={{ gap: 2 }}>
             <Typography
               sx={{
-                color: params.row.orderStatus === "pending" ? "red" : "green",
+                color:
+                  params.row.orderStatus === "pending"
+                    ? "blue"
+                    : params.row.orderStatus === "cancelled"
+                    ? "red"
+                    : "green",
               }}
             >
               {params.row.orderStatus.toUpperCase()}
