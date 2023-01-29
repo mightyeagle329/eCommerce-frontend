@@ -8,13 +8,15 @@ import {
   Container,
   createTheme,
   CssBaseline,
+  Grid,
   Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { forgotPass, resetPass } from "../../redux/apiCalls";
+import Footer from "../../components/Footer";
 
 const theme = createTheme();
 const ForgotPass = ({ title }) => {
@@ -80,6 +82,10 @@ const ForgotPass = ({ title }) => {
                     </div>
                   )}
                 <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
                   disabled={
                     (email.length > 0 &&
                       !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) ||
@@ -111,36 +117,65 @@ const ForgotPass = ({ title }) => {
                   fullWidth
                   name="password2"
                   label="Password2"
-                  type="password2"
+                  type="password"
                   id="password2"
                   autoComplete="current-password2"
                   variant="standard"
                   onChange={(e) => setPassword2(e.target.value)}
                 />
                 {password !== password2 && (
-                  <span style={{ color: "red", fontSize: "10px" }}>
+                  <div style={{ color: "red", fontSize: "10px" }}>
                     ☹ Passwords doesn't match!
-                  </span>
+                  </div>
                 )}
                 {(password.length < 4 || password2.length < 4) && (
-                  <span style={{ color: "red", fontSize: "10px" }}>
+                  <div style={{ color: "red", fontSize: "10px" }}>
                     ✯ Password must be at least 4 characters long!
-                  </span>
+                  </div>
                 )}
 
                 <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
                   disabled={
                     password !== password2 ||
                     password.length < 4 ||
                     password2.length < 4 ||
                     loading
                   }
+                  onClick={(e) => handleSubmit(e)}
                 >
                   {loading ? "Please wait.." : "Submit"}
                 </Button>
               </Box>
             )}
           </Box>
+        </Container>
+
+        <Container maxWidth="lg">
+          <Grid container>
+            <Grid item xs>
+              Remember Password?
+              <Link
+                to="/login"
+                variant="body2"
+                style={{ marginLeft: "1px", textDecoration: "none" }}
+              >
+                Login
+              </Link>
+            </Grid>
+            <Grid item>
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                style={{ marginLeft: "1px", textDecoration: "none" }}
+              >
+                Sign Up
+              </Link>
+            </Grid>
+          </Grid>
         </Container>
       </ThemeProvider>
 
@@ -158,6 +193,7 @@ const ForgotPass = ({ title }) => {
           {response?.message}
         </Alert>
       </Snackbar>
+      <Footer />
     </>
   );
 };
