@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import ToBeSeller from "./components/ToBeSeller";
 import SellerDashboard from "./pages/seller/Dashboard";
 import Dashboard from "./pages/public/Dashboard";
+import ForgotPass from "./pages/public/ForgotPass";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -45,6 +46,12 @@ const App = () => {
                 <Dashboard />
               )
             }
+          />
+          <Route exact path="/forgot_pass" element={<ForgotPass title="Forgot Password" />} />
+          <Route
+            exact
+            path="/reset_pass/:userId/:token"
+            element={<ForgotPass title="Reset Password" />}
           />
           <Route
             exact

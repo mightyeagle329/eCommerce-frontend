@@ -39,6 +39,26 @@ export const logout = async () => {
   window.location = "/login";
 };
 
+export const forgotPass = async (email) => {
+  try {
+    const res = await axios.post("/auth/forgot-pass", { email: email });
+    return res;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+export const resetPass = async (password, userId, token) => {
+  try {
+    const res = await axios.post(`/auth/reset-pass/${userId}/${token}`, {
+      newPw: password,
+    });
+    return res;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 export const register = async (user) => {
   try {
     const res = await axios.post(`/auth/register`, user);

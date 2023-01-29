@@ -127,7 +127,7 @@ export default function Login() {
           <Grid item xs>
             Forgot password?
             <Link
-              to=""
+              to="/forgot_pass"
               variant="body2"
               style={{ marginLeft: "1px", textDecoration: "none" }}
             >
