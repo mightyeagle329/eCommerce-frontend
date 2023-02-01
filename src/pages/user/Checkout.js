@@ -22,7 +22,7 @@ import {
   Container,
 } from "@mui/material";
 import { useState } from "react";
-import { addOrder, updateUser } from "../../redux/apiCalls";
+import { addOrder, deleteCart, updateUser } from "../../redux/apiCalls";
 import { Box } from "@mui/system";
 
 const steps = [
@@ -178,6 +178,8 @@ const Checkout = () => {
       if (res.status === 200) {
         setSubmitSuccess(true);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        // clear cart
+        deleteCart(user._id, dispatch);
       } else setSubmitSuccess(false);
     });
   };
@@ -197,7 +199,7 @@ const Checkout = () => {
   return (
     <Container maxWidth="xl">
       <Typography variant="h6">Checkout</Typography>
-      {cart.products.length === 0 && (
+      {cart.products.length === 0 && activeStep != 3 && (
         <Typography variant="h5">
           Theres noting to checkout in your cart!
         </Typography>
@@ -515,7 +517,7 @@ const Checkout = () => {
         </Stepper>
       )}
       {activeStep === steps.length && (
-        <Typography sx={{ mt: 2, mb: 1 }}>Thanks for your order.</Typography>
+        <Typography sx={{ mt: 2, mb: 1 }}>Thanks for placing your order.</Typography>
       )}
 
       {/* Shipping Info Save Success Message */}
