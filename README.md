@@ -3,7 +3,7 @@
 This is frontend(customer+seller) part of Multi-Vendor E-Commerce Web App Development project. Other parts:
 
 admin panel: https://github.com/mightyeagle329/eCommerce-admin <br>
-api: https://github.com/rakify/eCommerce-api <br>
+api: https://github.com/mightyeagle329/eCommerce-api <br>
 
 ![Logo](https://i.ibb.co/n0pPFtf/Logo-Makr-2n-MNe-U.png)
 
